@@ -12,49 +12,59 @@ A ruby terminal Chess game.
 
 ## Features 
 
-### Realistic High-Speed Movement
+### Rendering
 
-In order to achieve realistic high-speed illusory movement (like car wheels on a highway appearing to move slowly)
-it was necessary for me to use the modulo operator when resetting the position of the rendered planes.
+If a piece is selected the board will render the valid moves for that piece in a different color than the rest of the board.
 
 ```javascript
-if ( orbitPos.z > nearPlane ) {
-  orbitPos.z = farPlane + ( orbitPos.z % nearPlane );
-.
-.
-.
-if ( orbitPos.z < nearPlane ) {
-  orbitPos.z = nearPlane + ( orbitPos.z % farPlane );
-.
-.
-.
+  def render
+    until false
+      system("clear")
+      board.rows.each_with_index do |row,i|
+        row.each_with_index do |col,j|
+          pos = [i,j]
+          symbol = board[pos].symbol
+          color = board[pos].color
+          unless pos == cursor.pos
+            if cursor.selected != nil && cursor.selected.pos == pos
+              print print " #{symbol} ".send(color).on_blue.blink
+            elsif cursor.selected != nil && cursor.selected.valid_moves.include?(pos)
+              print " #{symbol} ".send(color).on_magenta
+            else
+              if i.even? && j.even?
+                print " #{symbol} ".send(color).on_white
+              elsif i.odd? && j.odd?
+                print " #{symbol} ".send(color).on_white
+              else
+                print " #{symbol} ".send(color).on_black
+              end
+            end
+          else
+            print " #{symbol} ".send(color).on_red
+          end
+        end
+        puts ""
+      end
+      cursor.get_input
+    end
+  end
 ```
 
-### Big Bang Animation
+### Movement Modules
 
-In order to simulate a big bang the camera FOV starts at 180˚ and animates downward to a randomized parameter.
-I played around with different decrement methods to make the animation as smooth as possible.
+The use of modules significantly reduced the amount of code necessary.
 
 ```javascript 
-function decrementFov(decrement) {
-  camera.fov -= decrement;
-  camera.updateProjectionMatrix();
-}
+class Queen < Piece
+  include Slideable
 
-function decrementFovToFinalFov() {
-  if ( camera.fov > finalFov * 2.5 ) {
-    decrementFov(0.3);
-  } else if (camera.fov > finalFov) {
-    decrementFov( (camera.fov * (camera.fov / 10))  / (360 * 36) );
-  } else {
-    clearInterval( fovDecrementInterval );
-    cosmicInception = false;
-  }
-}
-.
-.
-.
-function animateNewSceneFov() {
-  fovDecrementInterval = setInterval( decrementFovToFinalFov, 6 );
-}
+  def symbol
+    "♕"
+  end
+
+  protected
+  def move_dirs
+    diagonal_dirs + horizontal_dirs
+  end
+end
 ```
