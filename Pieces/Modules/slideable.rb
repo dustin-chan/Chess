@@ -8,9 +8,6 @@ module Slideable
   end
 
   def moves
-    #collects all different moves piece can do
-    #references move_dirs of Piece subclass
-    #returns an array of all possible moves for Piece subclass
     result = []
     move_dirs.each do |dir|
       result += grow_unblocked_moves_in_dir(dir[0],dir[1])

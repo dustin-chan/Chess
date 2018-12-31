@@ -1,6 +1,4 @@
-# require_relative 'piece.rb'
 require 'singleton'
-# require_relative 'board.rb'
 class NullPiece < Piece
   include Singleton
 
