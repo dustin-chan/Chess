@@ -32,7 +32,6 @@ class Pawn < Piece
   end
 
   def forward_dir
-    #returns 1 or -1
     if self.color == :cyan
       return -1
     else

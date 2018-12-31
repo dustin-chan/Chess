@@ -1,5 +1,3 @@
-# require_relative 'board'
-# require_relative 'nullpiece'
 class Piece
   attr_reader :board, :color
   attr_accessor :pos
