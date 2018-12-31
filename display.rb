@@ -1,5 +1,4 @@
 require "colorize"
-# require_relative 'board'
 require 'byebug'
 class Display
   attr_reader :board, :cursor
@@ -16,7 +15,7 @@ class Display
           pos = [i,j]
           symbol = board[pos].symbol
           color = board[pos].color
-          unless pos == cursor.pos #|| (cursor.selected != nil && cursor.selected.valid_moves.include?(pos))
+          unless pos == cursor.pos
             if cursor.selected != nil && cursor.selected.pos == pos
               print print " #{symbol} ".send(color).on_blue.blink
             elsif cursor.selected != nil && cursor.selected.valid_moves.include?(pos)

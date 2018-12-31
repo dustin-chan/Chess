@@ -41,8 +41,6 @@ class Board
   end
 
   def in_check?(color)
-    king_pos =
-
   end
 
   def checkmate?(color)
@@ -51,7 +49,6 @@ class Board
 
   def valid_pos?(pos)
     return false if pos.any? {|num| num < 0 || num > 7}
-    #add conditional for piece existence in place (not NullPiece)
     true
   end
 
