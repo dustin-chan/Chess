@@ -1,22 +1,26 @@
 # Chess
 A ruby terminal Chess game.
 
-### Controls 
+### Instructions
+
+In your CLI run "ruby board.rb" to play a game of Chess.
+
+### Controls
 
 * Arrow keys to move
 * Enter to select spaces
 
-## Technologies 
+## Technologies
 
 * Ruby
 
-## Features 
+## Features
 
 ### Rendering
 
 If a piece is selected the board will render the valid moves for that piece in a different color than the rest of the board.
 
-```javascript
+```Ruby
   def render
     until false
       system("clear")
@@ -54,7 +58,7 @@ If a piece is selected the board will render the valid moves for that piece in a
 
 The use of modules significantly reduced the amount of code necessary.
 
-```javascript 
+```javascript
 class Queen < Piece
   include Slideable
 
